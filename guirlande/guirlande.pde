@@ -13,16 +13,23 @@ final int FRAME_RATE = 30;
 /** BEGINNING of user code */
 byte r[], g[], b[];
 
-// user just have to implement this function to update
-// color values at each step
+// user just have to implement these 2 functions to :
+// - initialize color values at startup
+// - update color values at each step
 
 void prepareLights() {
+  for(int i = 0; i < LEN; i++) {
+    r[i] = g[i] = b[i] = 0;
+  }
+}
+
+void updateLights() {
   final int L2 = LEN / 2;
   for(int i = 0; i < LEN; i++) {
     byte c = (byte) (100 - abs(i - L2) * 100 / L2);
     r[(i + frameCount) % LEN] = c;
     g[(i + 2 * frameCount) % LEN] = c;
-    b[(i + 3 * frameCount) % LEN] = c;
+    b[LEN - (i + frameCount) % LEN - 1] = c;
   }
 }
 
@@ -46,15 +53,13 @@ void setup() {
   g = new byte[LEN];
   b = new byte[LEN];
   size(LEN * 2 * LIGHT_RADIUS + 2, LIGHT_RADIUS * 2 + 2);
-  for(int i = 0; i < LEN; i++) {
-    r[i] = g[i] = b[i] = 0;
-  }
+  prepareLights();
   refreshLights();
   noStroke();
 }
 
 void draw() {
   refreshLights();
-  prepareLights();
+  updateLights();
 }
 
