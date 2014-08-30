@@ -1,8 +1,20 @@
+/**
+ * my first processing sketch :-)
+ * try to emulate a future arduino light animation
+ */
+
+// number of lights
 final int LEN = 60;
+// size of light in window 
 final int LIGHT_RADIUS = 10;
+// animation rate (number of step / s)
 final int FRAME_RATE = 30;
 
+/** BEGINNING of user code */
 byte r[], g[], b[];
+
+// user just have to implement this function to update
+// color values at each step
 
 void prepareLights() {
   final int L2 = LEN / 2;
@@ -12,8 +24,9 @@ void prepareLights() {
     g[(i + 2 * frameCount) % LEN] = c;
     b[(i + 3 * frameCount) % LEN] = c;
   }
-  //println("Current = " + current);
 }
+
+/** END of user code **/
 
 void refreshLights() {
   for(int i = 0; i < LEN; i++) {
@@ -22,8 +35,6 @@ void refreshLights() {
   rect(x, LIGHT_RADIUS + 1, LIGHT_RADIUS, LIGHT_RADIUS);
   }
 }
-
-int current = 0;
 
 void setup() {
   rectMode(CENTER);
